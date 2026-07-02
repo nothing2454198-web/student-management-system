@@ -1,0 +1,154 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Home - Student Management System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        text-align: center;
+        color: white;
+        padding: 4rem 2rem;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        margin: 0.5rem;
+        background-color: #667eea;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #764ba2;
+    }
+
+    .btn-secondary {
+        background-color: #764ba2;
+    }
+
+    .btn-secondary:hover {
+        background-color: #667eea;
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card h3 {
+        color: #667eea;
+        margin-bottom: 1rem;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        color: #667eea;
+        font-weight: bold;
+    }
+
+    .stat-label {
+        color: #666;
+        margin-top: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Student Management System</h1>
+    <p>Manage, organize, and track student information efficiently</p>
+    
+    {% if user.is_authenticated %}
+        <p style="font-size: 1rem; margin-bottom: 1.5rem;">Ready to manage students? Get started now!</p>
+        <a href="{% url 'students:student-list' %}" class="btn">Go to Dashboard</a>
+        <a href="{% url 'students:student-create' %}" class="btn btn-secondary">Add New Student</a>
+    {% else %}
+        <p style="font-size: 1rem; margin-bottom: 1.5rem;">Login or register to access the full features</p>
+        <a href="{% url 'login' %}" class="btn">Login</a>
+        <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+    {% endif %}
+</div>
+
+{% if user.is_authenticated %}
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-number">{{ total_students }}</div>
+        <div class="stat-label">Total Students</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ total_departments }}</div>
+        <div class="stat-label">Departments</div>
+    </div>
+</div>
+{% else %}
+<div class="features">
+    <div class="feature-card">
+        <h3>📊 Easy Management</h3>
+        <p>Efficiently manage and organize student records with an intuitive interface. Add, edit, and delete student information with ease.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🔒 Secure Access</h3>
+        <p>Your data is protected with secure authentication. Only authorized users can access the student management system.</p>
+    </div>
+    <div class="feature-card">
+        <h3>🎓 Department Tracking</h3>
+        <p>Track students by department and manage information across different academic divisions.</p>
+    </div>
+    <div class="feature-card">
+        <h3>📧 Email Integration</h3>
+        <p>Store and manage email information for each student for easy communication and record-keeping.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

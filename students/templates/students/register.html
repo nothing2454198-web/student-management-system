@@ -1,0 +1,192 @@
+{% extends 'students/base.html' %}
+
+{% block title %}Register - Student Management System{% endblock %}
+
+{% block extra_css %}
+<style>
+    .register-container {
+        max-width: 450px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-container h2 {
+        text-align: center;
+        color: #667eea;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+    }
+
+    .help-text {
+        font-size: 0.85rem;
+        color: #666;
+        margin-top: 0.3rem;
+    }
+
+    .btn-register {
+        width: 100%;
+        padding: 0.8rem;
+        background-color: #667eea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-register:hover {
+        background-color: #764ba2;
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: #666;
+    }
+
+    .form-footer a {
+        color: #667eea;
+        text-decoration: none;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .error-message {
+        color: #721c24;
+        margin-top: 0.3rem;
+        padding: 0.5rem;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 3px;
+        font-size: 0.9rem;
+    }
+
+    .errorlist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .errorlist li {
+        color: #721c24;
+        margin: 0.3rem 0;
+        padding: 0.5rem;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 3px;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <h2>Create Account</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error-message">{{ form.username.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error-message">{{ form.email.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_first_name">First Name (Optional):</label>
+            {{ form.first_name }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_last_name">Last Name (Optional):</label>
+            {{ form.last_name }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="error-message">
+                    {% for error in form.password1.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if form.password1.help_text %}
+                <div class="help-text">
+                    {{ form.password1.help_text|safe }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password2">Confirm Password:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="error-message">
+                    {% for error in form.password2.errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% if form.password2.help_text %}
+                <div class="help-text">
+                    {{ form.password2.help_text|safe }}
+                </div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn-register">Register</button>
+    </form>
+
+    <div class="form-footer">
+        Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </div>
+
+    <div class="form-footer" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+        <a href="{% url 'home' %}">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}

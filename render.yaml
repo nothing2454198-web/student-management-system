@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: student-management
+    env: python
+    plan: free
+    buildCommand: bash build.sh
+    startCommand: gunicorn student_management.wsgi --log-file -
+    envVars:
+      - key: DEBUG
+        value: 'False'
+      - key: PYTHON_VERSION
+        value: '3.14.0'

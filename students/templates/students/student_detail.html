@@ -1,0 +1,113 @@
+{% extends 'students/base.html' %}
+
+{% block title %}{{ object.name }} - Student Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-container h1 {
+        color: #667eea;
+        margin-bottom: 1.5rem;
+    }
+
+    .detail-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .detail-item:last-of-type {
+        border-bottom: none;
+    }
+
+    .detail-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        color: #333;
+        font-size: 1.1rem;
+        margin-top: 0.3rem;
+    }
+
+    .action-buttons {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <h1>{{ object.name }}</h1>
+    
+    <div class="detail-item">
+        <div class="detail-label">Email</div>
+        <div class="detail-value">{{ object.email }}</div>
+    </div>
+    
+    <div class="detail-item">
+        <div class="detail-label">Department</div>
+        <div class="detail-value">{{ object.department }}</div>
+    </div>
+    
+    <div class="detail-item">
+        <div class="detail-label">Created</div>
+        <div class="detail-value">{{ object.created_at|date:"F d, Y H:i" }}</div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{% url 'students:student-update' object.pk %}" class="btn btn-primary">Edit Student</a>
+        <a href="{% url 'students:student-delete' object.pk %}" class="btn btn-danger">Delete Student</a>
+        <a href="{% url 'students:student-list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}
